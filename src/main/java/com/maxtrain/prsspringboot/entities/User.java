@@ -1,5 +1,8 @@
 package com.maxtrain.prsspringboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +18,7 @@ public class User {
 	
     private int id;
     private String userName;
+    
     private String password;
     private String firstName;
     private String lastName;
@@ -56,16 +60,16 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+    @JsonIgnore
 	public String getPassword() {
 		return password;
 	}
-
+    @JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getFirstName() {
+	public String getFirstName() { 
 		return firstName;
 	}
 
@@ -97,7 +101,7 @@ public class User {
 		this.email = email;
 	}
 
-	public boolean isReviewer() {
+	public boolean getIsReviewer() {
 		return isReviewer;
 	}
 
@@ -105,11 +109,11 @@ public class User {
 		this.isReviewer = isReviewer;
 	}
 
-	public boolean isAdmin() {
+	public boolean getIsAdmin() {
 		return isAdmin;
 	}
 
-	public void setAdmin(boolean isAdmin) {
+	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 

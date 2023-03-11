@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "Product") 
 public class Product {
 	
 	@Id
@@ -19,11 +19,16 @@ public class Product {
 	
 	@Column(name="PartNbr")
 	private String partNumber;
+	@Column(name="Name")
 	private String name;
+	@Column(name="Price")
 	private double price;
+	@Column(name="Unit")
 	private String unit;
+	@Column(name="PhotoPath")
 	private String photoPath;
 	
+
 	@ManyToOne
 	@JoinColumn(name="VendorId")
 	private Vendor vendor;
@@ -96,7 +101,9 @@ public class Product {
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
 	}
-
+      
+	
+	
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", partNumber=" + partNumber + ", name=" + name + ", price=" + price + ", unit="

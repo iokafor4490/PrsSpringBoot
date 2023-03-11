@@ -151,12 +151,12 @@ public PurchaseRequest getById(@PathVariable int id) {
     	PurchaseRequest purchaserequest = new PurchaseRequest();
     	boolean purchaserequestExists = purchaserequestRepo.existsById(purchaserequestforReview.getId());
      
-    	if (purchaserequestExists && purchaserequest.getTotal() <= 50) {
+    	if (purchaserequestExists && purchaserequestforReview.getTotal() <= 50) {
     		purchaserequestforReview.setStatus(APPROVED);
     		purchaserequestforReview.setSubmittedDate(LocalDateTime.now());
     		purchaserequest = purchaserequestRepo.save(purchaserequestforReview);
     	
-    	} else if (purchaserequestExists && purchaserequest.getTotal() <= 50) {
+    	} else if (purchaserequestExists && purchaserequestforReview.getTotal() >= 50) {
     		purchaserequestforReview.setStatus(REVIEW);
     		purchaserequestforReview.setSubmittedDate(LocalDateTime.now());
     		purchaserequest = purchaserequestRepo.save(purchaserequestforReview);

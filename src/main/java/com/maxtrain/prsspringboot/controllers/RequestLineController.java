@@ -55,7 +55,8 @@ public class RequestLineController {
 
 		if (!requestlineExists) {
 			requestline = requestLineRepo.save(newRequestLine);
-			recalculateTotal(newRequestLine.getPurchaserequest());
+			requestline.setPurchaserequest(purchaserequestrepo.findById(newRequestLine.getPurchaserequest().getId()).get());
+			recalculateTotal(requestline.getPurchaserequest());
 
 		}
 
@@ -73,7 +74,8 @@ public class RequestLineController {
 		if (requestlineExists) {
 
 			requestline = requestLineRepo.save(updatedRequestLine);
-			recalculateTotal(updatedRequestLine.getPurchaserequest());
+			requestline.setPurchaserequest(purchaserequestrepo.findById(updatedRequestLine.getPurchaserequest().getId()).get());
+			recalculateTotal(requestline.getPurchaserequest());
 
 		}
 
@@ -81,7 +83,7 @@ public class RequestLineController {
 	}
 
 	@DeleteMapping("/{id}")
-	public RequestLine delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) {
 		RequestLine requestline = new RequestLine();
 		Optional<RequestLine> optionalRequestLine = requestLineRepo.findById(id);
 
@@ -94,8 +96,15 @@ public class RequestLineController {
 
 		}
 
-		return requestline;
+		// return requestline;
 	}
+	
+	// @GetMapping("/requestlinesforrequest/{id}")
+	// public List<RequestLine> getAllRequestLines(@PathVariable int id) {
+		//	List<RequestLine> requestLines = requestLineRepo.findById(id);
+
+	//	return requestLines;
+	//	 }
 
 	private void recalculateTotal(PurchaseRequest purchaserequest) {
 

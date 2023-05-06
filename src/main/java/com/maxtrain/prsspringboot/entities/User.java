@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name = "Users")
 public class User {
@@ -60,7 +61,7 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-    @JsonIgnore
+    
 	public String getPassword() {
 		return password;
 	}

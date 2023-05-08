@@ -1,4 +1,6 @@
 package com.maxtrain.prsspringboot.controllers;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.maxtrain.prsspringboot.entities.User;
 import com.maxtrain.prsspringboot.repositories.UserRepository;
@@ -33,18 +36,28 @@ public class UserController {
 		 return users;
 	}
 	
-	@GetMapping("/{id}")
-	public User getById(@PathVariable int id) {
-		User user = new User(); // new user
-		Optional<User> optionalUser = userRepo.findById(id);
-		
-		if (optionalUser.isPresent()) {
-			user = optionalUser.get();
-		}
-		return user;
-		
-		
-	}
+//	@GetMapping("/{id}")
+//	public User getById(@PathVariable int id) {
+//		User user = new User(); // new user
+//		Optional<User> optionalUser = userRepo.findById(id);
+//		
+//		if (optionalUser.isPresent()) {
+//			user = optionalUser.get();
+//		}
+//		return user;
+//		
+//		
+//	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<User> getById(@PathVariable int id) {
+	   Optional<User> optionalUser = userRepo.findById(id);
+       if (!optionalUser.isPresent()) {
+    	   // Return a 404 response if a user with the specified ID was not found
+ return ResponseEntity.notFound().build(); }
+ User user = optionalUser.get();
+ 	return ResponseEntity.ok(user);
+ 	}
 	
 	@PostMapping("")
 	public User create(@RequestBody User newUser) {
@@ -76,13 +89,14 @@ public class UserController {
 			 user = userRepo.save(updatedUser);
 		 
 		 }
+		 else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		 
 		 
 		 return user;
 		 
 	}
 	 
-	 @DeleteMapping("/{id}")
+	 @DeleteMapping("{id}")
 	 public User delete(@PathVariable int id) {
 		 User user = new User();
 		 Optional<User> optionalUser = userRepo.findById(id);
@@ -95,6 +109,7 @@ public class UserController {
 		 userRepo.deleteById(id);
 		 
 		 } 
+		 else throw new ResponseStatusException(HttpStatus.NOT_FOUND); //exception return new ResponseEntity(HttpStatus.NOT_FOUND);
 		 
 		 return user;
 	 
